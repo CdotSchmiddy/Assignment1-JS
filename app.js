@@ -3,6 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var bodyParser = require('body-parser');
+
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 // const mongoose = require('mongoose');
 // mongoose.connect(
 //   `mongodb+srv://Test:123@cal-hdyhl.mongodb.net/test?retryWrites=true&w=majority`,
@@ -30,6 +34,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.post('/contact', urlencodedParser, function(req, res, next) {
+  console.log(req.body);
+  res.render('contact', { title: 'Contact me' });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
